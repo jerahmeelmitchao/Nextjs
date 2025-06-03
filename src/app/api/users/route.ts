@@ -1,6 +1,5 @@
-// app/api/users/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { User } from '../../types';
+import { NextResponse } from 'next/server';
+import { User } from '@/types/user';
 
 let users: User[] = [];
 
@@ -8,9 +7,9 @@ export async function GET() {
   return NextResponse.json(users);
 }
 
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const newUser: User = { id: Date.now().toString(), ...body };
+export async function POST(req: Request) {
+  const newUser: User = await req.json();
+  newUser.id = Date.now();
   users.push(newUser);
   return NextResponse.json(newUser);
 }

@@ -1,16 +1,14 @@
-// app/api/blog/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { BlogPost } from '../../types';
+import { NextResponse } from 'next/server';
+import { BlogPost } from '@/types/blog';
 
-let posts: BlogPost[] = [];
+let blogPosts: BlogPost[] = [];
 
 export async function GET() {
-  return NextResponse.json(posts);
+  return NextResponse.json(blogPosts);
 }
 
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const newPost: BlogPost = { id: Date.now().toString(), ...body };
-  posts.push(newPost);
+export async function POST(req: Request) {
+  const newPost: BlogPost = await req.json();
+  blogPosts.push(newPost);
   return NextResponse.json(newPost);
 }
